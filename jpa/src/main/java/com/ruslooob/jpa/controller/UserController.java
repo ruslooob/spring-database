@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteUser(User user) {
+    public ResponseEntity<Void> deleteUser(@RequestBody User user) {
         userService.deleteUser(user);
         return ResponseEntity.ok().build();
     }

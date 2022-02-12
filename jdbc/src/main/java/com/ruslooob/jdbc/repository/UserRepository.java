@@ -55,7 +55,7 @@ public class UserRepository {
             stmt.setLong(1, id);
 
             ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next() && resultSet.getLong("user_id") != 0) {
+            if (resultSet.next()) {
                 Long userId = resultSet.getLong("user_id");
                 String userName = resultSet.getString("user_name");
                 String userEmail = resultSet.getString("user_email");

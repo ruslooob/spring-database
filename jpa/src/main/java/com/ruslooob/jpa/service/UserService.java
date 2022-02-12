@@ -4,6 +4,7 @@ import com.ruslooob.jpa.exception.UserAlreadyExistException;
 import com.ruslooob.jpa.model.User;
 import com.ruslooob.jpa.repository.UserRepository;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,49 +13,50 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+    private final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     private final UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-//        this.log = log;
     }
 
     public List<User> findAllUsers() {
-//        log.info("get all users");
+        logger.info("get all users");
 
         return userRepository.findAll();
     }
 
     public User getUser(Long id) {
-        User userById = userRepository.getById(id);
-//        log.info(String.format("get user %s", userById));
+        Optional<User> userById = userRepository.findById(id);
+        logger.info(String.format("get user %s", userById));
 
-        return userById;
+        return userById.orElseThrow(RuntimeException::new);
     }
 
     public User saveUser(User user) {
-//        log.info(String.format("find user %s", user));
+        logger.info(String.format("find user %s", user));
         Optional<User> userByEmail = userRepository.findByEmail(user.getEmail());
 
         if (userByEmail.isPresent()) {
-//            log.warn(String.format("user %s already exist", user));
+            logger.warn(String.format("user %s already exist", user));
             throw new UserAlreadyExistException(user);
         }
 
-//        log.info(String.format("user %s saved to database", user));
+        logger.info(String.format("user %s saved to database", user));
 
         return userRepository.save(user);
     }
 
     public User updateUser(User user) {
-//        log.info(String.format("update user %s", user));
+        logger.info(String.format("update user %s", user));
 
         return userRepository.save(user);
     }
 
     public void deleteUser(User user) {
-//        log.info(String.format("delete user %s", user));
+        logger.info(String.format("delete user %s", user));
         userRepository.delete(user);
     }
 
