@@ -1,10 +1,10 @@
-package com.ruslooob.springdatabase;
+package com.ruslooob.jdbc;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringDatabaseApplicationTests {
+class JdbcApplicationTests {
 
     @Test
     void contextLoads() {
