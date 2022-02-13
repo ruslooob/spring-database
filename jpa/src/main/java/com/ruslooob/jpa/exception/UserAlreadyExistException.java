@@ -5,7 +5,7 @@ import com.ruslooob.jpa.model.User;
 public class UserAlreadyExistException extends RuntimeException {
 
     public UserAlreadyExistException(User user) {
-        super(String.format("User %s already exists", user));
+        super(String.format("%s already exists", user));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.ruslooob.jpa.service;
 
 import com.ruslooob.jpa.exception.UserAlreadyExistException;
+import com.ruslooob.jpa.exception.UserNotFoundException;
 import com.ruslooob.jpa.model.User;
 import com.ruslooob.jpa.repository.UserRepository;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class UserService {
         Optional<User> userById = userRepository.findById(id);
         logger.info(String.format("get user %s", userById));
 
-        return userById.orElseThrow(RuntimeException::new);
+        return userById.orElseThrow(() -> new UserNotFoundException(id));
     }
 
     public User saveUser(User user) {
@@ -55,9 +56,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(User user) {
-        logger.info(String.format("delete user %s", user));
-        userRepository.delete(user);
+    public void deleteUser(Long id) {
+        logger.info(String.format("delete user with id %d", id));
+        userRepository.deleteById(id);
     }
 
 }
