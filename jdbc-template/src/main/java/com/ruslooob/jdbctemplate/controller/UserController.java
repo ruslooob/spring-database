@@ -20,8 +20,13 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> get() {
+    public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok(userService.findAll());
+    }
+
+    @GetMapping("/batch")
+    public ResponseEntity<List<User>> getAll(@RequestParam Long[] ids) {
+        return ResponseEntity.ok(userService.findAll(ids));
     }
 
     @GetMapping("/{id}")
@@ -34,14 +39,30 @@ public class UserController {
         return ResponseEntity.ok(userService.save(user));
     }
 
+    @PostMapping("/batch")
+    public ResponseEntity<List<User>> saveAll(@RequestBody List<User> users) {
+        return ResponseEntity.ok(userService.saveAll(users));
+    }
+
     @PutMapping
     public ResponseEntity<User> update(@RequestBody User user) {
         return ResponseEntity.ok(userService.update(user));
     }
 
+    @PutMapping("/batch")
+    public ResponseEntity<List<User>> updateAll(@RequestBody List<User> users) {
+        return ResponseEntity.ok(userService.updateAll(users));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         userService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/batch")
+    public ResponseEntity<Void> deleteAll(@RequestParam Long[] ids) {
+        userService.deleteAll(ids);
         return ResponseEntity.ok().build();
     }
 }
