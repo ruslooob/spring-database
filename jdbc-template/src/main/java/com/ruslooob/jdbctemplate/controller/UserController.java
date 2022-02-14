@@ -15,6 +15,7 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
+    // todo make another repository with jdbc template and inject it here by interface
     public UserController(UserService userService) {
         this.userService = userService;
     }

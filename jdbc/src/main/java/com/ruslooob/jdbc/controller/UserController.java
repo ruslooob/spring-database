@@ -16,6 +16,8 @@ public class UserController {
     private final UserRepository userRepository;
 
     @Autowired
+    // todo make another repository with statement
+    // create common interface and inject here one of them
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
