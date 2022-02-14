@@ -87,17 +87,43 @@ public class UserRepository {
             generatedKeys.next();
 
             user.setId(generatedKeys.getLong(1));
-
             return user;
         }
     }
 
-//    public User updateUser() throws SQLException {
-//
-//    }
-//
-//    public  void deleteUser() throws SQLException {
-//
-//    }
+    public User updateUser(User user) throws SQLException {
+        try (Connection connection = ConnectionResolver.getConnection()) {
+            String sql = """
+                    UPDATE users
+                    SET name = ?,
+                        email = ?
+                    WHERE id = ?
+                    """;
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.executeUpdate();
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            generatedKeys.next();
+
+            user.setId(generatedKeys.getLong("id"));
+            return user;
+        }
+    }
+
+    public void deleteUser(User user) throws SQLException {
+        try (Connection connection = ConnectionResolver.getConnection()) {
+            String sql = """
+                    DELETE FROM users
+                    where id = ?
+                    """;
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, user.getId());
+
+            stmt.executeUpdate();
+        }
+    }
 
 }

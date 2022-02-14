@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -33,5 +33,16 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> saveUser(@RequestBody User user) throws SQLException  {
         return ResponseEntity.ok(userRepository.saveUser(user));
+    }
+
+    @PutMapping
+    ResponseEntity<User> updateUser(@RequestBody User user) throws SQLException {
+        return ResponseEntity.ok(userRepository.saveUser(user));
+    }
+
+    @DeleteMapping
+    ResponseEntity<Void> deleteUser(@RequestBody User user) throws SQLException {
+        userRepository.deleteUser(user);
+        return ResponseEntity.ok().build();
     }
 }

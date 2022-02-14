@@ -17,9 +17,9 @@ public class ConnectionResolver {
 
     @Autowired
     public ConnectionResolver(Environment env) {
-        user = env.getProperty("datasource.username");
-        password = env.getProperty("datasource.password");
-        url = env.getProperty("datasource.url");
+        user = env.getProperty("spring.datasource.username");
+        password = env.getProperty("spring.datasource.password");
+        url = env.getProperty("spring.datasource.url");
     }
 
     public static Connection getConnection() throws SQLException {
