@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -70,7 +71,7 @@ public class UserRepository {
         // because its generate trivial mapper for you, and you do not write it.
         // in this example I have specially given other aliases,
         // because in 95% cases it will be like this.
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new UserRowMapper(), id));
+        return jdbcTemplate.query(sql, new UserRowMapper(), id).stream().findAny();
     }
 
     public User save(User user) {
@@ -95,7 +96,7 @@ public class UserRepository {
         return user;
     }
 
-    public List<User> saveAll(List<User> users) {
+    public void saveAll(List<User> users) {
         String sql = """
                 INSERT INTO users(name, email)
                         VALUES (?, ?)
@@ -113,9 +114,6 @@ public class UserRepository {
                 return users.size();
             }
         });
-
-        List<Long> userIds = users.stream().map(User::getId).toList();
-        return findAll(userIds);
     }
 
     public User update(User user) {

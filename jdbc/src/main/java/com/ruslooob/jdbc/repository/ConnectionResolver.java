@@ -16,10 +16,12 @@ public class ConnectionResolver {
     private static String url;
 
     @Autowired
-    public ConnectionResolver(Environment env) {
+    public ConnectionResolver(Environment env) throws SQLException {
         user = env.getProperty("spring.datasource.username");
         password = env.getProperty("spring.datasource.password");
         url = env.getProperty("spring.datasource.url");
+
+//        connection = DriverManager.getConnection(url, user, password);
     }
 
     public static Connection getConnection() throws SQLException {

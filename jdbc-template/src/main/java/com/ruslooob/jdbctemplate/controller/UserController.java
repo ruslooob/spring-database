@@ -41,8 +41,9 @@ public class UserController {
     }
 
     @PostMapping("/batch")
-    public ResponseEntity<List<User>> saveAll(@RequestBody List<User> users) {
-        return ResponseEntity.ok(userService.saveAll(users));
+    public ResponseEntity<Void> saveAll(@RequestBody List<User> users) {
+        userService.saveAll(users);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping

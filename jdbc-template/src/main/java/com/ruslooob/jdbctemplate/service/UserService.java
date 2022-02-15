@@ -35,8 +35,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> saveAll(List<User> users) {
-        return userRepository.saveAll(users);
+    public void saveAll(List<User> users) {
+        userRepository.saveAll(users);
     }
 
     public User update(User user) {
